@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #fdfcf8; --text: #1a1a1a; --accent: #333; }
+        * { box-sizing: border-box; }
+        body { background-color: var(--bg); margin: 0; padding: 10px; font-family: 'Source Sans Pro', sans-serif; display: flex; justify-content: center; overflow-x: hidden; }
+        .newspaper-game { background-color: var(--bg); color: var(--text); width: 100%; max-width: 380px; border: 1px solid #ddd; padding: 15px; }
+        header { text-align: center; border-bottom: 2px solid var(--accent); margin-bottom: 15px; padding-bottom: 8px; }
+        .date, .edition { font-size: 0.65rem; letter-spacing: 1px; font-weight: bold; text-transform: uppercase; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin: 8px 0; text-transform: uppercase; line-height: 1.1; }
+        h2 { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; margin: 0 0 10px 0; text-align: center; }
+        .instruction { font-size: 0.8rem; text-align: center; margin-bottom: 15px; color: #555; }
+        #crossword { display: grid; grid-template-columns: repeat(8, 1fr); gap: 3px; margin-bottom: 20px; width: 100%; }
+        .cell { width: 100%; aspect-ratio: 1/1; border: 1px solid #999; text-align: center; font-size: 1rem; font-weight: bold; background: white; text-transform: uppercase; }
+        .black { background: #333; border: none; }
+        .clues { text-align: left; font-size: 0.8rem; border-top: 1px solid #ccc; padding-top: 10px; }
+        .clues h3 { font-family: 'Playfair Display', serif; margin: 0 0 8px 0; font-size: 1rem; }
+        .clues ol { padding-left: 20px; margin: 0; }
+        button { margin-top: 15px; width: 100%; padding: 10px; background: var(--accent); color: white; font-weight: bold; border: none; cursor: pointer; border-radius: 2px; }
+        #success-msg { margin-top: 10px; font-weight: bold; color: #2e7d32; text-align: center; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="newspaper-game">
+        <header>
+            <div class="date">30 DE MAYO DE 2026</div>
+            <h1>THE ESTEFY & JAIME TIMES</h1>
+            <div class="edition">EDICIÓN ESPECIAL AMOR</div>
+        </header>
+        <div class="game-container">
+            <h2>Nuestra Historia en Letras</h2>
+            <p class="instruction">Completa las casillas blancas según nuestro viaje.</p>
+            <div id="crossword"></div>
+            <div class="clues">
+                <h3>Pistas</h3>
+                <ol>
+                    <li>Ciudad del "match" (M_____)</li>
+                    <li>Lugar favorito (B___)</li>
+                    <li>Auroras boreales (N______)</li>
+                    <li>Viaje más loco (I____)</li>
+                    <li>La app del inicio (T_____)</li>
+                </ol>
+            </div>
+            <button onclick="checkGame()">VERIFICAR</button>
+            <div id="success-msg"></div>
+        </div>
+    </div>
+    <script>
+        const answers = ['M','A','D','R','I','D','*','*','*','B','A','L','I','*','*','*','N','O','R','U','E','G','A','*','*','*','I','N','D','I','A','*','T','I','N','D','E','R','*','*'];
+        const container = document.getElementById('crossword');
+        answers.forEach(char => {
+            const input = document.createElement('input');
+            input.classList.add('cell');
+            if (char === '*') { input.classList.add('black'); input.disabled = true; }
+            else { input.maxLength = 1; input.dataset.answer = char; }
+            container.appendChild(input);
+        });
+        function checkGame() {
+            const inputs = document.querySelectorAll('.cell:not(.black)');
+            let correct = 0;
+            inputs.forEach(i => {
+                if (i.value.toUpperCase() === i.dataset.answer) { i.style.backgroundColor = "#e8f5e9"; correct++; }
+                else i.style.backgroundColor = "#ffebee";
+            });
+            document.getElementById('success-msg').innerHTML = (correct === inputs.length) ? "¡Match Perfecto! ❤️" : "¡Relee nuestra historia!";
+        }
+    </script>
+</body>
+</html>
+
+http://googleusercontent.com/immersive_entry_chip/0
